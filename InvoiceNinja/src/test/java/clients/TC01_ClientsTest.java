@@ -19,7 +19,10 @@ public class TC01_ClientsTest extends BaseTest{
 	@Test
 	public void clients() {
 		
-		//Step1:Click on "clients" link.
+		 ExcelUtil readExcelData=new ExcelUtil();
+		
+		//Step1:Click on "clients" link
+		 
 		HomePage homepage=new HomePage(driver);
         homepage.getClientLink().click();
         String expectedClientsPageTitle = "Clients | Invoice Ninja";
@@ -27,6 +30,7 @@ public class TC01_ClientsTest extends BaseTest{
         Reporter.log("Clients page is displayed",true);
         
         //Step2:Click on "new clients" button
+        
         ClientsPage clientspage=new ClientsPage(driver);
         clientspage.getnewClients().click();
         String expectedNewClientPageTitle = "New Client | Invoice Ninja";
@@ -34,11 +38,20 @@ public class TC01_ClientsTest extends BaseTest{
         Reporter.log("New Clients page is displayed",true);
         
         //Step3:Enter valid data in details box and click on "save" button
+        
         NewClientsPage newclient =new NewClientsPage(driver);
-        newclient.getName().sendKeys("TestYantra");
-        newclient.getIdNumber().sendKeys("12345");
-        newclient.getVatNumber().sendKeys("456");
-        newclient.getphone1().sendKeys("1234567890");
+        String name = readExcelData.readStringDataFromExcel("Clients", 1, 0);
+        newclient.getName().sendKeys(name);
+        
+        double idNumber = readExcelData.readNumberDataFromExcel("Clients", 1,1);
+        newclient.getIdNumber().sendKeys(""+idNumber+"");
+        
+        double vatNumber = readExcelData.readNumberDataFromExcel("Clients", 1, 2);
+        newclient.getVatNumber().sendKeys(""+vatNumber+"");
+        
+        double phone = readExcelData.readNumberDataFromExcel("Clients", 1, 3);
+        newclient.getphone1().sendKeys(""+phone+"");
+        
         newclient.getSaveButton().click();	
         String expectedViewClientPageTitle = "View Client | Invoice Ninja";
         Assert.assertEquals(driver.getTitle(),expectedViewClientPageTitle,"Information is not saved");
@@ -46,3 +59,4 @@ public class TC01_ClientsTest extends BaseTest{
         
 	}
 }
+
