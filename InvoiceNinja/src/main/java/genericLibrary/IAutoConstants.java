@@ -20,4 +20,5 @@ public interface  IAutoConstants {
 	String DEFAULT_USERNAME = "sumanth.l@testyantra.com";
 	String DEFAULT_PASSWORD = "admin@123";
 	
+	
 }
